@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
+    <script src="node_modules/systemjs/dist/system.js"></script>
+    <script src="config.js"></script>
+    <script>
+      System.import('app').catch(function (err) {
+        console.error('loading error: ' + err);
+      });
+    </script>
+  </head>
+  <body>
+    <jazoon-app>loading...</jazoon-app>
+  </body>
+</html>
