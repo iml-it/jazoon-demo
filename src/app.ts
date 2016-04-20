@@ -1,38 +1,28 @@
 import {Component} from 'angular2/core';
-import {NameComponent} from './name-component';
-import {FriendService} from './friends';
+import {ROUTER_DIRECTIVES, ROUTER_PROVIDERS, RouteConfig} from 'angular2/router';
+
+import {NewTodo, TodoDetail, TodosList} from './routes/index';
+import {TodoService} from './services/todos';
 
 @Component({
-  selector: 'jazoon-app',
+  selector: 'todo-app',
   template: `
-    <h1>yipeeh {{name}}</h1>
-    <button [disabled]="isDisabled" (click)="changeName()">change name</button>
-    <ul>
-      <li *ngFor="#friend of friends">{{friend}}</li>
-    </ul>
-    <input [(ngModel)]="name">
-    <name [(value)]="name"></name>
+    <h1>Todos</h1>
+    <div>
+      <a [routerLink]="['TodoList']">Todos</a>
+      <a [routerLink]="['NewTodo']">New Todo</a>
+    </div>
+    <router-outlet></router-outlet>
   `,
-  directives: [NameComponent],
-  providers: [FriendService]
+  directives: [ROUTER_DIRECTIVES],
+  providers: [ROUTER_PROVIDERS, TodoService],
+  styles: []
 })
+@RouteConfig([
+  {name: 'TodoList', path: '/todos', component: TodosList, useAsDefault: true},
+  {name: 'NewTodo', path: '/new', component: NewTodo},
+  {name: 'TodoDetail', path: '/todos/:id', component: TodoDetail}
+])
 export class App {
-
-  name: string;
-  isDisabled: boolean = false;
-  friends: string[];
-
-  constructor(friendService: FriendService) {
-    this.name = 'Zap Brannigan';
-    this.friends = friendService.list;
-  }
-
-  changeName() {
-    this.name = 'Jack the Rapper';
-  }
-
-  // valueChanged(name: string) {
-  //   this.name = name;
-  // }
 
 }
